@@ -44,12 +44,12 @@ with col22:
 
         with col25:
             st.markdown("**혈압**")
-            systolic_bp = st.number_input("수축기 혈압 (mmHg)", min_value=50, max_value=250, value=120)
-            diastolic_bp = st.number_input("이완기 혈압 (mmHg)", min_value=30, max_value=150, value=80)
+            systolic_bp = st.number_input("수축기 혈압 (mmHg)", min_value=60, max_value=260, value=120)
+            diastolic_bp = st.number_input("이완기 혈압 (mmHg)", min_value=20, max_value=170, value=80)
             st.markdown("")
             st.markdown("**혈액 검사**")
-            total_cholesterol = st.number_input("총콜레스테롤 (mg/dL)", min_value=50, max_value=500, value=180)
-            triglycerides = st.number_input("트리글리세라이드 (mg/dL)", min_value=20, max_value=1000, value=150)
+            total_cholesterol = st.number_input("총콜레스테롤 (mg/dL)", min_value=40, max_value=700, value=180)
+            triglycerides = st.number_input("트리글리세라이드 (mg/dL)", min_value=20, max_value=600, value=150)
             hdl = st.number_input("HDL 콜레스테롤 (mg/dL)", min_value=10, max_value=150, value=50)
             ldl = st.number_input("LDL 콜레스테롤 (mg/dL)", min_value=10, max_value=300, value=100)
             hemoglobin = st.number_input("혈색소 (g/dL)", min_value=5.0, max_value=25.0, value=15.0)
@@ -57,12 +57,12 @@ with col22:
         with col26:
             st.markdown("**신장 기능**")
             urine_protein = st.selectbox("요단백", options=["-", "±", "+1", "+2", "+3", "+4"])
-            serum_creatinine = st.number_input("혈청 크레아티닌 (mg/dL)", min_value=0.1, max_value=15.0, value=1.0)
+            serum_creatinine = st.number_input("혈청 크레아티닌 (mg/dL)", min_value=0.1, max_value=5.0, value=1.0)
             st.markdown("")
             st.markdown("**간 기능**")
-            ast = st.number_input("혈청지오티(AST) (IU/L)", min_value=0, max_value=1000, value=20)
-            alt = st.number_input("혈청지피티(ALT) (IU/L)", min_value=0, max_value=1000, value=20)
-            gamma_gtp = st.number_input("감마지피티 (IU/L)", min_value=0, max_value=1000, value=20)
+            ast = st.number_input("혈청지오티(AST) (IU/L)", min_value=0, max_value=300, value=20)
+            alt = st.number_input("혈청지피티(ALT) (IU/L)", min_value=0, max_value=300, value=20)
+            gamma_gtp = st.number_input("감마지피티 (IU/L)", min_value=0, max_value=500, value=20)
 
 
         # 입력받은 값 변환
