@@ -103,11 +103,7 @@ with col3:
                 showarrow=False,
                 font=dict(size=20)
             )
-        ],
-        margin=dict(
-        l=50,  # Left (좌측 여백)
-        r=50  # Right (우측 여백)
-        )
+        ]
     )
 
 
