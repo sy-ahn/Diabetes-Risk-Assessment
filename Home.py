@@ -291,7 +291,8 @@ with col8:
     )
 
     fig.update_layout(
-        title="Feature Correlation Heatmap"
+        title="Feature Correlation Heatmap",
+        height=550
     )
 
     st.plotly_chart(fig, use_container_width=True)
@@ -326,7 +327,8 @@ with col9:
     fig.update_layout(
         xaxis_title="상관계수",
         yaxis_title="",
-        coloraxis_showscale=False
+        coloraxis_showscale=False,
+        height=550
     )
 
     fig.add_vline(
