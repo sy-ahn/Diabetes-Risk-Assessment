@@ -59,7 +59,7 @@ plt.rcParams["axes.unicode_minus"] = False
 # 데이터 불러오기
 df = pd.read_csv('diabetes_preprocessed.csv')
 
-col3, col4, col4_2 = st.columns([1,2,1])
+col3, col4, col4_2 = st.columns([3,4,2])
 
 with col3:
     # 타겟 비율
@@ -289,8 +289,7 @@ with col8:
     )
 
     fig.update_layout(
-        title="Feature Correlation Heatmap",
-        height=600
+        title="Feature Correlation Heatmap"
     )
 
     st.plotly_chart(fig, use_container_width=True)
@@ -325,8 +324,7 @@ with col9:
     fig.update_layout(
         xaxis_title="상관계수",
         yaxis_title="",
-        coloraxis_showscale=False,
-        height=600
+        coloraxis_showscale=False
     )
 
     fig.add_vline(
