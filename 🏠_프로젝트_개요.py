@@ -484,12 +484,11 @@ with col12:
 
     st.plotly_chart(fig, use_container_width=True)
 
-st.info("""
-- **정확도(Accuracy)**: 4가지 모델 중 XGBoost(0.668)가 가장 높은 예측 정확도를 나타냈으며, Random Forest가 그 뒤를 이었습니다.
-
-- **정밀도(Precision)**: XGBoost가 가장 높은 정밀도를 기록하여 오분류(False Positive) 위험을 줄이는 데 가장 우수한 성능을 보였습니다.
-
-- **F1-스코어(F1-score)**: 데이터 불균형을 고려한 F1-스코어에서도 XGBoost가 가장 우수한 균형을 보여 최종 모델 후보로 선정했습니다.
+with st.expander("📖 성능 비교 그래프 해석"):
+    st.markdown("""
+- **정확도(Accuracy)**: XGBoost가 가장 높은 예측 정확도를 보였으며, Random Forest가 그 뒤를 이었습니다.
+- **정밀도(Precision)**: XGBoost가 가장 높은 정밀도를 기록하여 오분류(False Positive)를 가장 효과적으로 줄였습니다.
+- **F1-score**: 정밀도와 재현율을 종합적으로 평가한 결과에서도 XGBoost가 가장 우수한 성능을 보였습니다.
 """)
 
 st.markdown("")
@@ -500,7 +499,7 @@ a, b, c, d = st.columns([2,2,2,3])
 a.metric("정확도 (Accuracy)", "0.667", border=True)
 b.metric("재현율 (Weighted Recall)", "0.663", border=True)
 c.metric("F1-스코어 (Weighted F1-score)", "0.663", border=True)
-st.markdown("Gradient Boosting 기반의 앙상블 모델인 XGBoost는 변수 간의 복잡한 상호작용을 효과적으로 학습하여 모든 평가 지표(정확도, 정밀도, F1-스코어)에서 가장 뛰어난 성능을 입증했습니다.")
+st.caption("Gradient Boosting 기반의 앙상블 모델인 XGBoost는 변수 간의 복잡한 상호작용을 효과적으로 학습하여 모든 평가 지표(정확도, 정밀도, F1-스코어)에서 가장 뛰어난 성능을 입증했습니다.")
 
 st.markdown("")
 
@@ -515,7 +514,7 @@ with left:
         'Value':['5', '0.1', '200', '1.0', '0.8']
     })
     st.table(bestparameter_df)
-st.markdown("💡 GridSearchCV 및 5-Fold Cross Validation을 통해 총 5가지 핵심 파라미터를 최적화하여 모델 성능을 추가로 향상시켰습니다.")
+st.caption("💡 GridSearchCV 및 5-Fold Cross Validation을 통해 총 5가지 핵심 파라미터를 최적화하여 모델 성능을 추가로 향상시켰습니다.")
 st.markdown("")
 
 st.markdown("#### 최적화 후 최종 모델 성능")
@@ -566,8 +565,8 @@ with col14:
 
 
 st.markdown("**클래스별 평가지표 (Classification Report)**")
-col15, col16, col17 = st.columns([6,10,2])
-with col15:
+col16, col17, col18 = st.columns([6,10,2])
+with col16:
     df_report = pd.DataFrame(
         [
             [0.69, 0.76, 0.72],
@@ -581,7 +580,7 @@ with col15:
         df_report.style.format("{:.2f}").background_gradient(cmap="Blues", vmin=0.5, vmax=1.0),
         use_container_width=True
     )
-with col16:
+with col17:
     st.info("""
     📋 **클래스별 세부 성능**
 
