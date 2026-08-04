@@ -11,15 +11,15 @@ import seaborn as sns
 
 # Streamlit 페이지 설정
 st.set_page_config(
-    page_title="Diabetes Risk Assessment",
+    page_title="당뇨병 위험군 예측 및 자가진단",
     page_icon="🩺",
     layout="wide"
 )
 
-st.markdown("# 🩺 Diabetes Risk Assessment")
+st.markdown("# 🩺 당뇨병 위험군 예측 및 자가진단 프로젝트")
 st.info("""
-건강검진 데이터를 기반으로 당뇨병 위험군 여부를 예측하는 머신러닝 웹서비스입니다.  
-사용자가 건강검진 정보를 입력하면 당뇨병 위험군 여부와 예측 결과를 확인할 수 있습니다.
+본 서비스는 국민건강보험공단의 건강검진 빅데이터를 기반으로 **당뇨병 위험군 여부를 예측하는 머신러닝 웹 서비스**입니다.  
+**왼쪽 측면 메뉴의 Prediction 페이지**에서 본인의 건강검진 수치를 입력하시면, 머신러닝 모델이 분석한 **당뇨병 위험도 및 맞춤형 예측 결과**를 확인하실 수 있습니다.
 """)
 
 
@@ -27,29 +27,29 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("""
-    #### Project Information
+    #### 프로젝트 개요
     
-    | Item | Description |
+    | 구분 | 세부 내용 |
     |------|-------------|
-    | **Problem** | Diabetes Risk Group Prediction |
-    | **Task** | Binary Classification |
-    | **Dataset** | [국민건강보험공단 건강검진정보](https://data.edmgr.kr/dataView.do?id=www-data-go-kr-data-filedata-15007122) |
-    | **Framework** | Streamlit |
+    | **분석 주제** | 건강검진 데이터 기반 당뇨병 위험군 예측 |
+    | **수행 과제** | 이진 분류 (정상 / 위험군 예측) |
+    | **수집 데이터** | [국민건강보험공단 건강검진정보](https://data.edmgr.kr/dataView.do?id=www-data-go-kr-data-filedata-15007122) |
+    | **개발 환경** | Streamlit (파이썬 기반 웹 프레임워크) |
     """)
 
 with col2:
     st.markdown("""
-    #### Project Goals
+    #### 주요 개발 목표
 
-    - 데이터 분석 및 전처리
-    - 머신러닝 기반 당뇨병 위험군 예측
-    - 모델 비교 및 성능 평가
-    - Streamlit 기반 자가진단 웹서비스 구현
+    - 건강검진 데이터 탐색적 분석(EDA) 및 전처리
+    - 최적의 머신러닝 모델 구축 및 성과 비교·평가
+    - 실시간 사용자 입력 기반의 당뇨병 자가진단 인터페이스 구현
+    - 예측 결과에 따른 사용자 맞춤형 건강 가이드 제공
     """)
 
 
 st.markdown("----")
-st.markdown("## Exploratory Data Analysis (EDA)")
+st.markdown("## 탐색적 데이터 분석 (EDA)")
 
 
 # 폰트 설정
@@ -199,6 +199,8 @@ with col4_2:
 
     st.plotly_chart(fig, use_container_width=True)
 
+st.caption("📌 **인구통계 및 생활습관 요인**: 정상군**(57.4%)**과 위험군**(42.6%)**의 비율 차이가 크지 않아 학습에 적합한 데이터 분포를 보이며, **연령이 증가할수록, 그리고 현재 흡연자일수록** 위험군 비율이 상대적으로 높게 나타났습니다.")
+
 plot_df = df.copy()
 plot_df["그룹"] = plot_df["Target"].map({
     0: "정상군",
@@ -276,6 +278,8 @@ with col7:
 
     st.plotly_chart(fig, use_container_width=True)
 
+st.info("📌 **주요 신체 지표 비교 (Boxplot)**: 정상군 대비 **위험군의 BMI와 혈압(수축기 및 이완기)이 전반적으로 높은 경향**을 보여, 비만도와 혈압 수치가 당뇨병 위험과 밀접한 관련성이 있음을 확인했습니다.")
+
 col8, col9 = st.columns(2)
 
 with col8:
@@ -291,7 +295,7 @@ with col8:
     )
 
     fig.update_layout(
-        title="Feature Correlation Heatmap",
+        title="주요 건강 지표 간 상관관계 분석 (히트맵)",
         height=550
     )
 
@@ -316,7 +320,7 @@ with col9:
         text="상관계수",
         color="상관계수",
         color_continuous_scale="RdBu_r",
-        title="각 변수와 Target의 상관관계"
+        title="건강 검진 항목별 당뇨 위험도(타겟) 관련성"
     )
 
     fig.update_traces(
@@ -339,12 +343,13 @@ with col9:
 
     st.plotly_chart(fig, use_container_width=True)
 
+st.info("📌 **변수 간 관련성 분석**: 허리둘레, 연령대, 수축기 혈압, BMI 등이 위험도와 상대적으로 높은 관련성을 보였습니다. 변수 간 중복 정보가 크지 않아 **여러 지표를 종합 활용하는 머신러닝 접근이 적절함**을 보여줍니다.")
 
 st.markdown("----")
-st.markdown("## Model Comparison & Performance")
+st.markdown("## 머신러닝 모델 비교 및 성능 평가")
 
 
-st.markdown("### Model Comparison")
+st.markdown("### 📊 4가지 주요 모델 성능 비교")
 
 my_blues = ["#0047AB", "#1F75FE", "#73C2FB", "#BDE0FE"]
 
@@ -353,14 +358,14 @@ col10, col11, col12=st.columns(3)
 with col10:
     df_score = pd.DataFrame({
         "Model": ["XGBoost", "Random Forest", "Logistic Regression", "Decision Tree"],
-        "Accuracy (Weighted Recall)": [0.667518, 0.661426, 0.651434, 0.644420]
+        "정확도": [0.667518, 0.661426, 0.651434, 0.644420]
     })
 
     fig = px.bar(
         df_score, 
         x="Model",
-        y="Accuracy (Weighted Recall)",
-        text="Accuracy (Weighted Recall)",
+        y="정확도",
+        text="정확도",
         color="Model",
         color_discrete_sequence=my_blues
     )
@@ -370,9 +375,9 @@ with col10:
     fig.update_layout(
         yaxis_range=[0.6, 0.7],
         height=450,
-        legend_title="Accuracy (Weighted Recall)",
+        legend_title="정확도",
         showlegend=False,
-        title="Accuracy (Weighted Recall)"
+        title="정확도 (Accuracy)"
     )
 
     st.plotly_chart(fig, use_container_width=True)
@@ -380,14 +385,14 @@ with col10:
 with col11:
     df_score = pd.DataFrame({
         "Model": ["XGBoost", "Random Forest", "Logistic Regression", "Decision Tree"],
-        "Weighted Precision": [0.663944, 0.657157, 0.646557, 0.639324]
+        "정밀도": [0.663944, 0.657157, 0.646557, 0.639324]
     })
 
     fig = px.bar(
         df_score,
         x="Model",
-        y="Weighted Precision",
-        text="Weighted Precision",
+        y="정밀도",
+        text="정밀도",
         color="Model",
         color_discrete_sequence=my_blues
     )
@@ -397,9 +402,9 @@ with col11:
     fig.update_layout(
         yaxis_range=[0.6, 0.7],
         height=450,
-        legend_title="Weighted Precision",
+        legend_title="정밀도",
         showlegend=False,
-        title="Weighted Precision"
+        title="정밀도 (Weighted Precision)"
     )
 
     st.plotly_chart(fig, use_container_width=True)
@@ -407,14 +412,14 @@ with col11:
 with col12:
     df_score = pd.DataFrame({
         "Model": ["XGBoost", "Random Forest", "Logistic Regression", "Decision Tree"],
-        "F1-score": [0.663826, 0.655587, 0.644533, 0.638237]
+        "F1-스코어": [0.663826, 0.655587, 0.644533, 0.638237]
     })
 
     fig = px.bar(
         df_score,
         x="Model",
-        y="F1-score",
-        text="F1-score",
+        y="F1-스코어",
+        text="F1-스코어",
         color="Model",
         color_discrete_sequence=my_blues
     )
@@ -424,26 +429,36 @@ with col12:
     fig.update_layout(
         yaxis_range=[0.6, 0.7],
         height=450,
-        legend_title="F1-score",
+        legend_title="F1-스코어",
         showlegend=False,
-        title="F1-score"
+        title="F1-스코어(Weighted F1-score)"
     )
 
     st.plotly_chart(fig, use_container_width=True)
 
-st.markdown("### Selected Model: XGBoost")
-st.markdown("XGBoost가 Accuracy, Weighted Precision, Weighted F1-score에서 가장 우수한 성능(Performance)을 보여 최종 모델로 선정하였습니다.")
+st.info("""
+- **정확도(Accuracy)**: 4가지 모델 중 XGBoost(0.668)가 가장 높은 예측 정확도를 나타냈으며, Random Forest가 그 뒤를 이었습니다.
 
-a, b, c, d = st.columns([2,2,2,3])
-a.metric("Accuracy (Weighted Recall)", "0.667", border=True)
-b.metric("Weighted Precision", "0.663", border=True)
-c.metric("Weighted F1-score", "0.663", border=True)
+- **정밀도(Precision)**: XGBoost가 가장 높은 정밀도를 기록하여 오분류(False Positive) 위험을 줄이는 데 가장 우수한 성능을 보였습니다.
+
+- **F1-스코어(F1-score)**: 데이터 불균형을 고려한 F1-스코어에서도 XGBoost가 가장 우수한 균형을 보여 최종 모델 후보로 선정했습니다.
+""")
+
 st.markdown("")
 
-st.markdown("### Hyperparameter Optimization")
+st.markdown("### 🏆 최종 예측 모델 선정: XGBoost")
 
-st.markdown("#### Best Parameter")
+a, b, c, d = st.columns([2,2,2,3])
+a.metric("정확도 (Accuracy)", "0.667", border=True)
+b.metric("재현율 (Weighted Recall)", "0.663", border=True)
+c.metric("F1-스코어 (Weighted F1-score)", "0.663", border=True)
+st.markdown("Gradient Boosting 기반의 앙상블 모델인 XGBoost는 변수 간의 복잡한 상호작용을 효과적으로 학습하여 모든 평가 지표(정확도, 정밀도, F1-스코어)에서 가장 뛰어난 성능을 입증했습니다.")
 
+st.markdown("")
+
+st.markdown("### ⚙️ 하이퍼파라미터 최적화")
+
+st.markdown("#### 최적 파라미터 조합")
 left, right=st.columns([1,2])
 
 with left:
@@ -452,41 +467,25 @@ with left:
         'Value':['5', '0.1', '200', '1.0', '0.8']
     })
     st.table(bestparameter_df)
+st.markdown("💡 GridSearchCV 및 5-Fold Cross Validation을 통해 총 5가지 핵심 파라미터를 최적화하여 모델 성능을 추가로 향상시켰습니다.")
 st.markdown("")
 
-st.markdown("#### Final Performance")
+st.markdown("#### 최적화 후 최종 모델 성능")
 
 e, f, g, h = st.columns([2,2,2,3])
-e.metric("Accuracy (Weighted Recall)", "0.6694", border=True)
-f.metric("Weighted F1-score", "0.6660", border=True)
-g.metric("Weighted Precision", "0.6660", border=True)
+e.metric("정확도 (Accuracy)", "0.6694", border=True)
+f.metric("F1-스코어 (Weighted F1-score)", "0.6660", border=True)
+g.metric("정밀도 (Weighted Precision)", "0.6660", border=True)
 
 
-col13, col14, col15 = st.columns(3)
-
-with col14:
-    st.markdown("**Classification Report**")
-
-    df_report = pd.DataFrame(
-        [
-            [0.69, 0.76, 0.72],
-            [0.63, 0.55, 0.59]
-        ],
-        columns=["Precision", "Recall", "F1-score"],
-        index=["Normal (0)", "Risk (1)"]
-    )
-
-    st.dataframe(
-        df_report.style.format("{:.2f}").background_gradient(cmap="Blues", vmin=0.5, vmax=1.0),
-        use_container_width=True
-    )
+col13, col14, col15 = st.columns([6,10,2])
     
 with col13:
     cm_data = [[28715, 9266], 
             [12603, 15567]]
 
-    x_labels = ["Predicted Normal", "Predicted Risk"]
-    y_labels = ["Actual Normal", "Actual Risk"]
+    x_labels = ["예측: 저위험군", "예측: 고위험군"]
+    y_labels = ["실제: 저위험군", "실제: 고위험군"]
 
     fig = px.imshow(
         cm_data,
@@ -498,8 +497,47 @@ with col13:
     )
 
     fig.update_layout(
-        title="Confusion Matrix Heatmap",
-        height=400
+        title="혼동 행렬 (Confusion Matrix)",
+        height=300
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
+with col14:
+    st.markdown("")
+    st.markdown("")
+    st.markdown("")
+
+    st.info("""
+    📊 **오분류 경향성 분석**
+
+    - 정상군(0)을 정확하게 분류한 비율이 상대적으로 높으며, 고위험군(1) 역시 안정적으로 구분해 내고 있습니다.
+
+    - 모델이 예측할 때 발생시키는 오분류의 위치와 경향성을 한눈에 확인할 수 있습니다.
+    """)
+
+
+st.markdown("**클래스별 평가지표 (Classification Report)**")
+col15, col16, col17 = st.columns([6,10,2])
+with col15:
+    df_report = pd.DataFrame(
+        [
+            [0.69, 0.76, 0.72],
+            [0.63, 0.55, 0.59]
+        ],
+        columns=["정밀도", "재현율", "F1-스코어"],
+        index=["저위험군 (0)", "고위험군 (1)"]
+    )
+
+    st.dataframe(
+        df_report.style.format("{:.2f}").background_gradient(cmap="Blues", vmin=0.5, vmax=1.0),
+        use_container_width=True
+    )
+with col16:
+    st.info("""
+    📋 **클래스별 세부 성능**
+
+    - 정상군(0): 정밀도 0.69 / 재현율 0.76으로 안정적인 성능을 보입니다.
+
+    - 고위험군(1): 재현율(0.55)이 상대적으로 낮아 일부 위험군을 정상으로 예측하는 경우가 존재하므로, 향후 데이터 보강 및 모델 개선의 주요 포인트로 활용할 수 있습니다.
+    """)

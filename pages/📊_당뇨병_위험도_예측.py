@@ -11,7 +11,7 @@ import matplotlib.ticker as mtick
 
 # Streamlit 페이지 설정
 st.set_page_config(
-    page_title="Diabetes Risk Assessment",
+    page_title="당뇨병 위험군 예측 및 자가진단",
     page_icon="🩺",
     layout="wide"
 )
@@ -23,9 +23,9 @@ col21, col22, col23 = st.columns([1, 2, 1])
 
 with col22:
 
-    st.markdown("## ✅ Check Your Diabetes Risk")
+    st.markdown("## 당뇨병 위험군 예측 및 자가진단")
 
-    st.markdown("#### Input Your Health Checkup Information")
+    st.markdown("#### **📝 건강검진 정보를 입력해주세요**")
     with st.container(border=True):
         col24, col25, col26 = st.columns(3)
 
@@ -133,8 +133,28 @@ with col22:
 
     # 예측
 
-    if st.button("👉 **Check Risk**"):
+    st.markdown("""
+    <style>
+    div.stButton > button {
+        width: 100%;
+        height: 60px;
+        background-color: #1D4ED8;
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        border-radius: 12px;
+        border: none;
+    }
 
+    div.stButton > button:hover {
+        background-color: #1D4ED8;
+        color: white;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    if st.button("👉 **당뇨병 위험도 예측하기**", use_container_width=True):
+        st.markdown("---")
         # 모델 예측
         prediction = diabetes_model.predict(input_df)[0]
         probability = diabetes_model.predict_proba(input_df)[0][1]
@@ -166,7 +186,7 @@ with col22:
         # High Risk
         if prediction == 1:
 
-            st.error("## High Risk Group")
+            st.error("## 당뇨병 고위험군(High Risk Group)")
 
             risk = probability * 100
             donut_color = "#ff4b4b"
@@ -225,7 +245,7 @@ with col22:
         # Low Risk
         else:
 
-            st.success("## Low Risk Group")
+            st.success("## 당뇨병 저위험군(Low Risk Group)")
 
             risk = probability * 100
             donut_color = "#2E8B57"
@@ -303,15 +323,21 @@ with col22:
         with st.expander("예측에 가장 큰 영향을 준 건강 요인 (SHAP)"):
 
             if prediction == 1:
-                st.markdown("#### Risk를 높이는 데 가장 크게 기여한 요인")
+                st.markdown("#### 🔍 고위험군 예측에 가장 크게 기여한 요인")
             else:
-                st.markdown("#### Low Risk 예측에 가장 크게 기여한 요인")
+                st.markdown("#### 🔍 저위험군 예측에 가장 크게 기여한 요인")
 
             for i, row in enumerate(top3.itertuples(), 1):
                 st.markdown(
                     f"**{i}. {row.feature}** "
                     f"(SHAP = {abs(row.shap):.3f})"
                 )
+
+            # for i, row in enumerate(top3.itertuples(), 1):
+            #     st.markdown(
+            #         f"**{i}. {row.feature}**  \n"
+            #         f"- SHAP 영향도: **{abs(row.shap):.3f}**"
+            #     )
 
 
         with st.expander("생활습관 개선 권장사항"):
@@ -334,9 +360,9 @@ with col22:
 
             if prediction == 1:
 
-                st.error("### 생활습관 개선 권장사항")
+                st.error("#### 📋 생활습관 개선 권장사항")
                 for rec in recommendations:
-                    st.markdown(f"- {rec}")
+                    st.markdown(f"- **{rec}**")
                 st.write(
                     "위 권장사항은 이번 예측에 영향을 준 건강 요인을 "
                     "바탕으로 생성되었습니다."
@@ -344,7 +370,7 @@ with col22:
 
             else:
 
-                st.success("### 건강한 생활습관 유지하기")
+                st.success("### 📋 건강한 생활습관 유지하기")
                 for rec in recommendations:
                     st.markdown(f"- **{rec}**")
                 st.write(
