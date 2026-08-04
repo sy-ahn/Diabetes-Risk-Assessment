@@ -488,7 +488,7 @@ with st.expander("📖 성능 비교 그래프 해석"):
     st.markdown("""
 - **정확도(Accuracy)**: XGBoost가 가장 높은 예측 정확도를 보였으며, Random Forest가 그 뒤를 이었습니다.
 - **정밀도(Precision)**: XGBoost가 가장 높은 정밀도를 기록하여 오분류(False Positive)를 가장 효과적으로 줄였습니다.
-- **F1-score**: 정밀도와 재현율을 종합적으로 평가한 결과에서도 XGBoost가 가장 우수한 성능을 보였습니다.
+- **F1-스코어**: 정밀도와 재현율을 종합적으로 평가한 결과에서도 XGBoost가 가장 우수한 성능을 보였습니다.
 """)
 
 st.markdown("")
