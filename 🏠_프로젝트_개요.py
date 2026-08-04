@@ -47,8 +47,38 @@ with col2:
     - 예측 결과에 따른 사용자 맞춤형 건강 가이드 제공
     """)
 
+st.markdown("")
+st.markdown("#### 프로젝트 수행 절차 (Workflow)")
 
-st.markdown("----")
+# 6개 단계를 가로 컬럼으로 배치
+c1, c2, c3, c4, c5, c6 = st.columns(6)
+
+with c1:
+    st.markdown("##### 1. 데이터 수집")
+    st.caption("건강보험공단 검진 데이터")
+
+with c2:
+    st.markdown("##### 2. 데이터 전처리")
+    st.caption("결측치 및 이상치 정제")
+
+with c3:
+    st.markdown("##### 3. EDA")
+    st.caption("주요 지표 분포 탐색")
+
+with c4:
+    st.markdown("##### 4. 모델 비교")
+    st.caption("4개 머신러닝 알고리즘")
+
+with c5:
+    st.markdown("##### 5. 최종 모델")
+    st.caption("XGBoost 파라미터 튜닝")
+
+with c6:
+    st.markdown("##### 6. 서비스 구현")
+    st.caption("Streamlit 웹 UI")
+
+
+st.markdown("---")
 st.markdown("## 탐색적 데이터 분석 (EDA)")
 
 
@@ -278,7 +308,7 @@ with col7:
 
     st.plotly_chart(fig, use_container_width=True)
 
-st.info("📌 **주요 신체 지표 비교 (Boxplot)**: 정상군 대비 **위험군의 BMI와 혈압(수축기 및 이완기)이 전반적으로 높은 경향**을 보여, 비만도와 혈압 수치가 당뇨병 위험과 밀접한 관련성이 있음을 확인했습니다.")
+st.caption("📌 **주요 신체 지표 비교 (Boxplot)**: 정상군 대비 **위험군의 BMI와 혈압(수축기 및 이완기)이 전반적으로 높은 경향**을 보여, 비만도와 혈압 수치가 당뇨병 위험과 밀접한 관련성이 있음을 확인했습니다.")
 
 col8, col9 = st.columns(2)
 
@@ -343,7 +373,7 @@ with col9:
 
     st.plotly_chart(fig, use_container_width=True)
 
-st.info("📌 **변수 간 관련성 분석**: 허리둘레, 연령대, 수축기 혈압, BMI 등이 위험도와 상대적으로 높은 관련성을 보였습니다. 변수 간 중복 정보가 크지 않아 **여러 지표를 종합 활용하는 머신러닝 접근이 적절함**을 보여줍니다.")
+st.caption("📌 **변수 간 관련성 분석**: 허리둘레, 연령대, 수축기 혈압, BMI 등이 위험도와 상대적으로 높은 관련성을 보였습니다. 변수 간 중복 정보가 크지 않아 **여러 지표를 종합 활용하는 머신러닝 접근이 적절함**을 보여줍니다.")
 
 st.markdown("----")
 st.markdown("## 머신러닝 모델 비교 및 성능 평가")
